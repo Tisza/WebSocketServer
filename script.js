@@ -9,7 +9,6 @@
 	}
 	
 	window.addEventListener("load", function() {
-        console.log(location.host);
 		var URL = "ws://" + location.host + ":3616/";
 		socket = new WebSocket(URL);
 		var name = $("nameset");
@@ -17,6 +16,9 @@
 		var send = $("msg");
 		send.addEventListener("keydown", msgEnter);
 		socket.onmessage = msg;
+        // for some reason some styles aren't working so...
+        window.addEventListener("resize", resize);
+        resize();
 	});
 	
 	function msg(e) {
@@ -95,5 +97,11 @@
                 });
             }
         }
+    }
+
+    function resize() {
+        var cb = $("chatlog");
+        var ms = $("msg");
+        cb.style.height = "calc(" + (window.innerHeight - parseInt(window.getComputedStyle(ms).height)) + "px" + " - 3em)";
     }
 })();
